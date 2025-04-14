@@ -10,7 +10,7 @@ const Navbar = () => {
   const toggleMobileMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="w-[90%] md:w-4/5 mx-auto mt-6 relative z-50">
+    <header className="w-[90%] md:w-[80%] mx-auto mt-6 relative z-50">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4 justify-between w-full md:w-auto">
           <Link to="/">
@@ -34,7 +34,7 @@ const Navbar = () => {
             <Link to="/login" className="hover:text-darkViolet">Login</Link>
             <Link
               to="/signup"
-              className="bg-cyan py-2 px-6 text-white rounded-full hover:opacity-50"
+              className="bg-cyan py-2 px-6 text-white rounded-full hover:opacity-70"
             >
               Sign Up
             </Link>
@@ -74,7 +74,7 @@ const Navbar = () => {
                 <Link
                   to="/signup"
                   onClick={toggleMobileMenu}
-                  className="bg-cyan text-white w-4/5 mx-auto py-4 px-6 rounded-full hover:opacity-80"
+                  className="bg-cyan text-white w-4/5 mx-auto py-4 px-6 rounded-full hover:opacity-70"
                 >
                   Sign Up
                 </Link>
