@@ -10,7 +10,7 @@ const Navbar = () => {
   const toggleMobileMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="w-[90%] md:w-[80%] mx-auto mt-6 relative z-50">
+    <header className="w-[90%] md:w-[75%] mx-auto mt-6 relative z-50">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4 justify-between w-full md:w-auto">
           <Link to="/">

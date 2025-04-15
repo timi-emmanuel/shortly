@@ -1,8 +1,13 @@
 import heroImage from '../assets/illustration-working.svg';
+import { motion, AnimatePresence } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 w-[80%] max-w-[1200px] mx-auto mt-20">
+    <motion.section
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+     className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 w-[75%] max-w-[1200px] mx-auto mt-20">
       
       {/* Text Section */}
       <div className="text-center md:text-left md:max-w-xl">
@@ -25,7 +30,7 @@ const Hero = () => {
           className="w-full max-w-xl md:max-w-[600px] lg:max-w-[650px] h-auto"
         />
       </div>
-    </section>
+    </motion.section>
   );
 };
 

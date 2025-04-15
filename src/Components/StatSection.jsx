@@ -5,7 +5,7 @@ import icon3 from "../assets/icon-fully-customizable.svg";
 
 const StatsSection = () => {
   return (
-    <section className="bg-gray-100 py-20 px-6 md:w-[80%] mx-auto">
+    <section className=" py-20 px-6 md:w-[80%] mx-auto">
       <div className="text-center mb-20 max-w-xl mx-auto">
         <h2 className="text-3xl font-bold mb-4">Advanced Statistics</h2>
         <p className="text-grayishViolet text-sm">
