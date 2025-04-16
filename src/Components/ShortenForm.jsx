@@ -17,7 +17,12 @@ const ShortenForm = ({ onShorten }) => {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/v1/shorten", {
+      const isLocal = import.meta.env.DEV;
+
+      const endpoint = isLocal ? "/api/v1/shorten"
+  : "https://cleanuri.com/api/v1/shorten";
+  
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ url: url.trim() }),
