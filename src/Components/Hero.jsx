@@ -1,5 +1,6 @@
 import heroImage from '../assets/illustration-working.svg';
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -17,9 +18,9 @@ const Hero = () => {
         <p className="text-Gray text-lg md:text-base mb-8 px-4 md:px-0">
           Build your brand’s recognition and get detailed insights on how your links are performing.
         </p>
-        <button className="bg-cyan text-white py-3 px-10 rounded-full font-bold text-lg hover:opacity-70 transition duration-200">
+        <Link to='/login' className="bg-cyan text-white py-3 px-10 rounded-full font-bold text-lg hover:opacity-70 transition duration-200">
           Get Started
-        </button>
+        </Link>
       </div>
 
       {/* Image Section */}

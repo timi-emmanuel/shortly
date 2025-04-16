@@ -2,8 +2,8 @@ import ConstrucImage from '../assets/underconstruction.jpeg';
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const Features = () => {
-return (
+const Login = () => {
+ return ( 
   <motion.div
     className="flex flex-col items-center justify-center mt-24 text-center"
     initial={{ opacity: 0 }}
@@ -20,7 +20,7 @@ return (
       Go Back Home
     </Link>
   </motion.div>
-);
+  );
 }
  
-export default Features;
+export default Login;

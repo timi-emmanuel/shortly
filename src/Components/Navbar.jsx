@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom"; // Import useLocation
 import logo from "../assets/logo.svg";
-import { Link } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation(); // Get the current route
 
   const toggleMobileMenu = () => setIsOpen(!isOpen);
+
+  const isActive = (path) => location.pathname === path ? "text-Red md:text-darkViolet" : "text-white md:text-Gray";
 
   return (
     <header className="w-[90%] md:w-[75%] mx-auto mt-6 relative z-50">
@@ -25,16 +28,16 @@ const Navbar = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex justify-between items-center w-full ml-8">
-          <div className="flex gap-8 items-center text-sm text-grayishViolet font-bold">
-            <Link to="/features" className="hover:text-darkViolet">Features</Link>
-            <Link to="/pricing" className="hover:text-darkViolet">Pricing</Link>
-            <Link to="/resources" className="hover:text-darkViolet">Resources</Link>
+          <div className="flex gap-8 text-white items-center text-sm font-bold">
+            <Link to="/features" className={`${isActive("/features")} hover:text-darkViolet`}>Features</Link>
+            <Link to="/pricing" className={`${isActive("/pricing")} hover:text-darkViolet`}>Pricing</Link>
+            <Link to="/resources" className={`${isActive("/resources")} hover:text-darkViolet`}>Resources</Link>
           </div>
-          <div className="flex gap-8 items-center text-sm text-grayishViolet font-bold">
-            <Link to="/login" className="hover:text-darkViolet">Login</Link>
+          <div className="flex gap-8 items-center text-sm font-bold">
+            <Link to="/login" className={`${isActive("/login")} hover:text-darkViolet`}>Login</Link>
             <Link
               to="/signup"
-              className="bg-cyan py-2 px-6 text-white rounded-full hover:opacity-70"
+              className={`bg-cyan py-2 px-6 text-white rounded-full hover:opacity-70`}
             >
               Sign Up
             </Link>
@@ -64,13 +67,13 @@ const Navbar = () => {
               transition={{ duration: 0.3 }}
             >
               <div className="flex flex-col space-y-10 text-2xl">
-               <Link to="/features" onClick={toggleMobileMenu}>Features</Link>
-                <Link to="/pricing" onClick={toggleMobileMenu}>Pricing</Link>
-                <Link to="/resources" onClick={toggleMobileMenu}>Resources</Link>
-              </div>             
+                <Link to="/features" onClick={toggleMobileMenu} className={`${isActive("/features")}`}>Features</Link>
+                <Link to="/pricing" onClick={toggleMobileMenu} className={`${isActive("/pricing")}`}>Pricing</Link>
+                <Link to="/resources" onClick={toggleMobileMenu} className={`${isActive("/resources")}`}>Resources</Link>
+              </div>
               <hr className="border-gray mx-10" />
               <div className="flex flex-col space-y-10 text-2xl">
-                <Link to="/login" onClick={toggleMobileMenu}>Login</Link>
+                <Link to="/login" onClick={toggleMobileMenu} className={`${isActive("/login")}`}>Login</Link>
                 <Link
                   to="/signup"
                   onClick={toggleMobileMenu}
@@ -78,7 +81,7 @@ const Navbar = () => {
                 >
                   Sign Up
                 </Link>
-              </div>              
+              </div>
             </motion.div>
           </>
         )}

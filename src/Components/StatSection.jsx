@@ -2,16 +2,22 @@ import StatCard from "./StatCard";
 import icon1 from "../assets/icon-brand-recognition.svg";
 import icon2 from "../assets/icon-detailed-records.svg";
 import icon3 from "../assets/icon-fully-customizable.svg";
+import { motion } from "framer-motion";
 
 const StatsSection = () => {
   return (
     <section className=" py-20 px-6 md:w-[80%] mx-auto">
-      <div className="text-center mb-20 max-w-xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4">Advanced Statistics</h2>
+      <motion.div 
+         className="text-center mb-20 max-w-xl mx-auto"
+         whileInView={{ opacity: 1, y: 0 }}
+         initial={{ opacity: 0, y: 50 }}
+         transition={{ duration: 0.5 }}
+         viewport={{ once: true }}>
+        <h2 className="text-3xl font-bold mb-4 text-darkViolet">Advanced Statistics</h2>
         <p className="text-grayishViolet text-sm">
           Track how your links are performing across the web with our advanced statistics dashboard.
         </p>
-      </div>
+      </motion.div>
 
       <div className="relative flex flex-col md:flex-row items-center md:items-stretch gap-12 md:gap-6 max-w-6xl mx-auto">
          
