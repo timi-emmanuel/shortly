@@ -1,5 +1,5 @@
 import heroImage from '../assets/illustration-working.svg';
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 
 const Hero = () => {

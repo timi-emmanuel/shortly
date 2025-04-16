@@ -3,6 +3,7 @@ import { useState } from "react";
 const ShortenForm = ({ onShorten }) => {
   const [url, setUrl] = useState("");
   const [error, setError] = useState(false);
+  
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -19,17 +20,24 @@ const ShortenForm = ({ onShorten }) => {
     try {
       const isLocal = import.meta.env.DEV;
 
-      const endpoint = isLocal ? "/api/v1/shorten"
-  : "https://cleanuri.com/api/v1/shorten";
-  
+      const endpoint = isLocal
+        ? "/api/v1/shorten"
+        : "https://cleanuri.com/api/v1/shorten";
+
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ url: url.trim() }),
       });
 
+      if (!res.ok) {
+        if (!navigator.onLine) {
+          throw new Error("No internet connection.");
+        }
+        throw new Error("Failed to shorten the link. Please try again.");
+      }
+
       const data = await res.json();
-      console.log(data);
 
       if (data.error) throw new Error(data.error);
 
@@ -41,7 +49,11 @@ const ShortenForm = ({ onShorten }) => {
       onShorten(newLink);
       setUrl("");
     } catch (err) {
-      alert(err.message || "Something went wrong.");
+      if (err.message === "Failed to fetch" && !navigator.onLine) {
+        alert("No internet connection.");
+      } else {
+        alert(err.message || "Something went wrong.");
+      }
       console.error(err);
     } finally {
       setLoading(false);
