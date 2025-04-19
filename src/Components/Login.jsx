@@ -1,16 +1,40 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../Firebase/firebase"; 
 // import logo from "../assets/logo.svg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // You can integrate Firebase auth here later
-    console.log("Logging in with:", email, password);
+    setError("");
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/"); // redirect to homepage
+    } catch (err) {
+      console.error("Login failed:", err.code, err.message);
+      switch (err.code) {
+        case "auth/user-not-found":
+          setError("No user found with this email.");
+          break;
+        case "auth/wrong-password":
+          setError("Incorrect password.");
+          break;
+        case "auth/invalid-email":
+          setError("Invalid email format.");
+          break;
+        default:
+          setError("Login failed. Please try again.");
+      }
+    }
+    
   };
 
   return (
@@ -35,16 +59,25 @@ const Login = () => {
               />
             </div>
 
-            <div>
+            <div className="relative">
               <label className="block text-sm font-medium mb-1 text-cyan">Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full px-4 py-2 border rounded-md outline-none focus:ring-1 focus:ring-cyan"
               />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-1 top-1/2 transform -translate-x-1/2 cursor-pointer text-cyan"
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </span>
             </div>
+
+            {error && <p className="text-Red text-left text-sm mt-2">{error}</p>}
+
 
             <button
               type="submit"
