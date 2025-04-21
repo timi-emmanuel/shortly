@@ -1,35 +1,26 @@
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const NotFound = () => {
- return (
-  <div className="flex flex-col items-center justify-center mt-32 text-center text-gray-800 font-sans">
-   <div className="mb-5">
-    <svg
-     xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 24 24"
-     fill="none"
-     stroke="currentColor"
-     strokeWidth="2"
-     strokeLinecap="round"
-     strokeLinejoin="round"
-     className="w-24 h-24 text-red-500"
+  return (
+    <motion.div 
+      className="min-h-screen flex flex-col justify-center items-center bg-white text-center p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
-     <circle cx="12" cy="12" r="10" />
-     <line x1="15" y1="9" x2="9" y2="15" />
-     <line x1="9" y1="9" x2="15" y2="15" />
-    </svg>
-   </div>
-   <h1 className="text-2xl font-bold mb-2">404 - Page Not Found</h1>
-   <p className="text-lg mb-5">
-    Oops! The page you are looking for does not exist.
-   </p>
-   <a
-    href="/"
-    className="text-darkViolet hover:underline text-lg"
-   >
-    Go back to Home
-   </a>
-  </div>
- );
+      <h1 className="text-6xl font-extrabold text-darkViolet mb-4">404</h1>
+      <p className="text-xl text-grayishViolet mb-8">
+        Oops! The page you're looking for doesn't exist.
+      </p>
+      <Link
+        to="/"
+        className="bg-cyan text-white px-6 py-3 rounded-full hover:opacity-80 transition"
+      >
+        Go Back Home
+      </Link>
+    </motion.div>
+  );
 };
 
 export default NotFound;
