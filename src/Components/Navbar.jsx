@@ -1,15 +1,23 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom"; 
+import { Link, useLocation } from "react-router-dom"; 
 import logo from "../assets/logo.svg";
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 
+export const getLastName = (displayName) => {
+  if (!displayName) return "";
+  const parts = displayName.split(" ");
+  return parts.length > 1 ? parts[1] : parts[0];
+};
+
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const [isOpen, setIsOpen] = useState(false); 
   const location = useLocation();
-  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  
+  
 
   const toggleMobileMenu = () => setIsOpen(!isOpen);
 
@@ -18,11 +26,7 @@ const Navbar = () => {
  
 
  
-  const getLastName = () => {
-    if (!user?.displayName) return "";
-    const parts = user.displayName.split(" ");
-    return parts.length > 1 ? parts[1] : parts[0];
-  };
+  
 
   return (
     <header className="w-[90%] md:w-[75%] mx-auto mt-6 relative z-50">
@@ -48,7 +52,7 @@ const Navbar = () => {
           <div className="flex gap-8 items-center text-sm font-bold">
             {user ? (
               <>
-                <span className=" text-grayishViolet text-lg">Welcome, {getLastName()}</span>
+                <span className=" text-grayishViolet text-lg">Welcome, {getLastName(user?.displayName)}</span>
                 <button
                   onClick={() => logout()}
                   className="bg-cyan py-2 px-6 text-white rounded-full hover:opacity-70"

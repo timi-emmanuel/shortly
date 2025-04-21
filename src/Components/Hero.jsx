@@ -2,18 +2,20 @@ import heroImage from '../assets/illustration-working.svg';
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import { useAuth } from "../contexts/AuthContext";
+import { getLastName } from "./Navbar";
 
 const Hero = () => {
   const { user } = useAuth();
+
   return (
-    <motion.section
+    <motion.section 
     initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6 }}
      className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 w-[75%] max-w-[1200px] mx-auto mt-20">
       
-      {/* Text Section */}
-      <div className="text-center md:text-left md:max-w-xl">
+      {/* Text Section */}      
+      <div className="text-center md:text-left md:max-w-xl">        
         <h1 className="text-4xl md:text-5xl font-bold text-darkViolet leading-tight md:leading-[1.2] mb-4">
           More than just shorter links
         </h1>
@@ -38,6 +40,8 @@ const Hero = () => {
           className="w-full max-w-xl md:max-w-[600px] lg:max-w-[650px] h-auto"
         />
       </div>
+
+      {user ? <div className="md:hidden self-start text-2xl text-grayishViolet font-bold">{`Welcome, ${getLastName(user?.displayName)}`}</div> : ""}
     </motion.section>
   );
 };
