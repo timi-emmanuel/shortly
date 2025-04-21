@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword} from "firebase/auth";
 import { auth } from "../Firebase/firebase"; 
 // import logo from "../assets/logo.svg";
 
@@ -20,18 +20,23 @@ const Login = () => {
       navigate("/"); // redirect to homepage
     } catch (err) {
       console.error("Login failed:", err.code, err.message);
+    
       switch (err.code) {
+        case "auth/invalid-credential":
+        case "auth/wrong-password":
+          setError("Incorrect email or password.");
+          break;
         case "auth/user-not-found":
           setError("No user found with this email.");
           break;
-        case "auth/wrong-password":
-          setError("Incorrect password.");
-          break;
         case "auth/invalid-email":
-          setError("Invalid email format.");
+          setError("Invalid email address format.");
+          break;
+        case "auth/too-many-requests":
+          setError("Too many failed attempts. Try again later.");
           break;
         default:
-          setError("Login failed. Please try again.");
+          setError("Something went wrong. Please try again.");
       }
     }
     
@@ -49,7 +54,7 @@ const Login = () => {
           <h2 className="text-xl font-bold text-left text-cyan my-6">Login to your account</h2>
           <form onSubmit={handleLogin} className="space-y-4 ">
             <div>
-              <label className="block text-sm font-medium mb-1 text-cyan">Email Address</label>
+              <label className="block text-sm font-medium mb-1 text-grayishViolet">Email Address</label>
               <input
                 type="email"
                 value={email}
@@ -60,7 +65,7 @@ const Login = () => {
             </div>
 
             <div className="relative">
-              <label className="block text-sm font-medium mb-1 text-cyan">Password</label>
+              <label className="block text-sm font-medium mb-1 text-grayishViolet">Password</label>
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
@@ -76,7 +81,15 @@ const Login = () => {
               </span>
             </div>
 
-            {error && <p className="text-Red text-left text-sm mt-2">{error}</p>}
+            <div className="flex justify-between w-full">
+              {error && <p className="text-Red text-left text-sm">{error}</p>}
+
+
+              <Link to="/reset-password" className="text-Gray hover:underline">forgot password?</Link>
+
+            </div>
+
+            
 
 
             <button
@@ -86,8 +99,8 @@ const Login = () => {
               Login
             </button>
 
-            <p className="text-center text-black text-sm mt-4">
-              Don't have an account? <Link to="/signup" className="text-cyan hover:underline">Sign up here</Link>
+            <p className="text-center text-grayishViolet text-sm mt-4">
+              Don't have an account? <Link to="/signup" className="text-cyan hover:underline ml-1">Sign up here</Link>
             </p>
           </form>
         </motion.div>

@@ -1,25 +1,27 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; 
+import logo from "../assets/logo.svg";
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../assets/logo.svg";
-import { useAuth } from "../contexts/AuthContext"; // 👈 import the hook
+import { useAuth } from "../contexts/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuth();
   const location = useLocation();
-  const { user, logout } = useAuth(); // 👈 get user and logout
   const navigate = useNavigate();
 
   const toggleMobileMenu = () => setIsOpen(!isOpen);
-  const isActive = (path) =>
-    location.pathname === path
-      ? "text-Red md:text-darkViolet"
-      : "text-white md:text-Gray";
 
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
+  const isActive = (path) =>
+    location.pathname === path ? "text-Red md:text-darkViolet" : "text-white md:text-Gray";
+ 
+
+ 
+  const getLastName = () => {
+    if (!user?.displayName) return "";
+    const parts = user.displayName.split(" ");
+    return parts.length > 1 ? parts[1] : parts[0];
   };
 
   return (
@@ -29,7 +31,6 @@ const Navbar = () => {
           <Link to="/">
             <img src={logo} alt="logo icon" />
           </Link>
-
           <button onClick={toggleMobileMenu} className="text-4xl text-grayishViolet md:hidden">
             {isOpen ? <HiX /> : <HiMenu />}
           </button>
@@ -43,18 +44,24 @@ const Navbar = () => {
             <Link to="/resources" className={`${isActive("/resources")} hover:text-darkViolet`}>Resources</Link>
           </div>
 
-          {/* Auth section */}
+          
           <div className="flex gap-8 items-center text-sm font-bold">
             {user ? (
-              <button onClick={handleLogout} className="bg-cyan py-2 px-6 text-white rounded-full hover:opacity-80">
-                Logout
-              </button>
+              <>
+                <span className=" text-grayishViolet text-lg">Welcome, {getLastName()}</span>
+                <button
+                  onClick={() => logout()}
+                  className="bg-cyan py-2 px-6 text-white rounded-full hover:opacity-70"
+                >
+                  Logout
+                </button>
+              </>
             ) : (
               <>
                 <Link to="/login" className={`${isActive("/login")} hover:text-darkViolet`}>Login</Link>
                 <Link
                   to="/signup"
-                  className="bg-cyan py-2 px-6 text-white rounded-full hover:opacity-70"
+                  className={`bg-cyan py-2 px-6 text-white rounded-full hover:opacity-70`}
                 >
                   Sign Up
                 </Link>
@@ -91,15 +98,17 @@ const Navbar = () => {
               <hr className="border-gray mx-10" />
               <div className="flex flex-col space-y-10 text-2xl">
                 {user ? (
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      toggleMobileMenu();
-                    }}
-                    className="bg-cyan text-white w-4/5 mx-auto py-4 px-6 rounded-full hover:opacity-70"
-                  >
-                    Logout
-                  </button>
+                  <>
+                    <button
+                      onClick={() => {
+                        logout();
+                        toggleMobileMenu();
+                      }}
+                      className="text-Red"
+                    >
+                      Logout
+                    </button>
+                  </>
                 ) : (
                   <>
                     <Link to="/login" onClick={toggleMobileMenu} className={`${isActive("/login")}`}>Login</Link>
